@@ -1,0 +1,62 @@
+minimesos {
+    clusterName = "mesos-elk-weave-net"
+    loggingLevel = "INFO"
+    mapAgentSandboxVolume = true
+    mapPortsToHost = false
+    mesosVersion = "1.0.0"
+    timeout = 5
+
+    agent {
+        imageName = "containersol/mesos-agent"
+        imageTag = "1.0.0-weave-net"
+        loggingLevel = "# INHERIT FROM CLUSTER"
+        portNumber = 5051
+
+        resources {
+
+            cpu {
+                role = "*"
+                value = 4
+            }
+
+            disk {
+                role = "*"
+                value = 20000
+            }
+
+            mem {
+                role = "*"
+                value = 2048
+            }
+
+            ports {
+                role = "*"
+                value = "[31000-32000]"
+            }
+        }
+    }
+
+    master {
+        aclJson = null
+        authenticate = false
+        imageName = "containersol/mesos-master"
+        imageTag = "1.0.0-0.1.0"
+        loggingLevel = "# INHERIT FROM CLUSTER"
+    }
+
+    zookeeper {
+        imageName = "jplock/zookeeper"
+        imageTag = "3.4.6"
+    }
+
+    marathon {
+        imageName = "mesosphere/marathon"
+        imageTag = "v1.3.0"
+
+        // Add 'app { marathonJson = "<path or URL to JSON file>" }' for every task you want to execute
+        app {
+            marathonJson = "https://raw.githubusercontent.com/ContainerSolutions/minimesos/e2a43362f4581122762c80d8780d09b567783f1a/apps/weave-scope.json"
+        }
+    }
+
+}
