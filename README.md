@@ -49,16 +49,18 @@ Received status update TASK_FAILED for task 'webserver'
 I1011 15:40:19.668148 28014 scheduler.cpp:231] Sending ACKNOWLEDGE call to http://172.17.0.4:5050/master/api/v1/scheduler
 ```
 
-This is probably because the router runs in the network namespace of the Mesos agent container instead of the host namespace.
+The problem here is that there is no weave bridge and when creating it inside the container nsenter is missing. 
 
-# TODO
+```
+$ ./weave --local create-bridge
+ERROR: nsenter utility missing. Please install it.
+root@92caf5e095f6:/script# apt-get install nsenter
+```
 
-The above problem can be solved in a few ways
+# Links
 
-* Update minimesos so the agents run in host networking mode. The subsequent problem here is is port collisions. This probably requires significant refactoring.
-* Create a separate Weave router container that is run alongside the minimesos cluster. The subsequent problem here is configuring the agents to use the correct IP and port number.
-
-The second option is preferable.
+* [Make it easier to run weave dockerless](https://github.com/weaveworks/weave/issues/1566)
+* [Running nsenter on Ubuntu 14.04](http://askubuntu.com/questions/439056/why-there-is-no-nsenter-in-util-linux)
 
 # Contact
 

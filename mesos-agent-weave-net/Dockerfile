@@ -26,4 +26,7 @@ RUN touch /weavedb/weavedata.db
 ADD weaver /script
 RUN chmod +x /script/weaver
 
+ADD weave /script
+RUN chmod +x script/weave
+
 ENTRYPOINT ["/script/run-mesos-agent.sh"]
