@@ -20,9 +20,10 @@ RUN mkdir /script
 ADD run-mesos-agent.sh /script
 RUN chmod +x /script/run-mesos-agent.sh
 
+RUN mkdir /weavedb
+RUN touch /weavedb/weavedata.db
+
 ADD weaver /script
 RUN chmod +x /script/weaver
-
-EXPOSE 6783
 
 ENTRYPOINT ["/script/run-mesos-agent.sh"]

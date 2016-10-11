@@ -1,10 +1,10 @@
 minimesos {
-    clusterName = "mesos-elk-weave-net"
+    clusterName = "mesos-weave-net"
     loggingLevel = "INFO"
     mapAgentSandboxVolume = true
     mapPortsToHost = false
     mesosVersion = "1.0.0"
-    timeout = 5
+    timeout = 60
 
     agent {
         imageName = "containersol/mesos-agent"
